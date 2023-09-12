@@ -1,0 +1,52 @@
+.card-request.mat-mdc-card {
+  margin: 0 0 10px 0;
+  padding: 1rem;
+  box-shadow: none;
+  border-radius: 10px;
+  .card-img-request {
+    background: var(--color-blue-sky);
+    border-radius: 50px;
+    padding: 15px;
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    color: #0086c9;
+    text-align: center;
+    vertical-align: top;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      border-radius: 0;
+    }
+  }
+
+  .mdc-card__actions {
+    align-items: baseline;
+    padding-top: 0;
+    .mat-mdc-menu-trigger {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  }
+  .mat-mdc-card-content {
+    width: 100%;
+    &:first-child {
+      padding-top: 0;
+    }
+    .card-status {
+      text-align: right;
+    }
+    .mat-mdc-card-title {
+      color: var(--neutral700);
+      font: 500 14px 'Inter', sans-serif;
+    }
+    .mat-mdc-card-subtitle {
+      color: var(--neutral900);
+      font: 500 16px 'Poppins', sans-serif;
+      margin-bottom: 20px;
+    }
+  }
+}

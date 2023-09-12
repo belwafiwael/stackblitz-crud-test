@@ -1,0 +1,15 @@
+.mat-mdc-dialog-container.mdc-dialog {
+  .mdc-dialog__title {
+    color: var(--neutral900);
+    font: 500 20px 'Poppins', sans-serif;
+    border-bottom: 1px solid var(--neutral100);
+    padding-bottom: 24px;
+  }
+  .mat-mdc-dialog-content.mdc-dialog__content {
+    padding-top: 25px;
+  }
+  .mat-mdc-dialog-actions {
+    border-top: 1px solid var(--neutral100);
+    padding: 24px;
+  }
+}

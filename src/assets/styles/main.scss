@@ -1,0 +1,19 @@
+@import 'base/reset';
+@import 'utilities/mixins';
+@import 'base/typography';
+@import 'base/custom-material';
+
+@import 'layout/button';
+@import 'layout/card';
+@import 'layout/ship';
+@import 'layout/modal';
+@import 'layout/form';
+
+body {
+  background-color: var(--neutral50);
+}
+.main-container {
+  margin: 5rem auto;
+  width: 100%;
+  max-width: 54rem;
+}

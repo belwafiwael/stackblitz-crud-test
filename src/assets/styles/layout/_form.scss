@@ -1,0 +1,10 @@
+.mat-mdc-form-field {
+  width: 100%;
+  .mat-mdc-text-field-wrapper {
+    border: 1px solid var(--neutral-200);
+  }
+  .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label {
+    font: 400 16px 'Inter', sans-serif;
+    color: var(--neutral-600);
+  }
+}

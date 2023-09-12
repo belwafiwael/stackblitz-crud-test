@@ -1,0 +1,44 @@
+.mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) {
+  &.status {
+    .mat-mdc-chip-action-label {
+      color: var(--color-yellow);
+      font: 500 14px 'Archivo', sans-serif;
+    }
+    &.status-encours {
+      background-color: var(--color-bg2);
+      .mat-mdc-chip-action-label {
+        color: var(--color-yellow);
+      }
+    }
+    &.status-valide {
+      background-color: var(--color-success);
+      .mat-mdc-chip-action-label {
+        color: var(--color-white);
+      }
+    }
+    &.status-reject {
+      background-color: red;
+      .mat-mdc-chip-action-label {
+        color: var(--color-white);
+      }
+    }
+  }
+
+  &.chip-name {
+    background-color: var(--neutral700);
+    border-radius: 6px;
+    margin-right: 10px;
+    .mat-mdc-chip-action-label {
+      color: var(--color-bg1);
+      font: 500 14px 'Inter', sans-serif;
+    }
+  }
+  &.chip-contrat {
+    background-color: var(--neutral100);
+    border-radius: 6px;
+    .mat-mdc-chip-action-label {
+      color: var(--color-blue);
+      font: 500 14px 'Inter', sans-serif;
+    }
+  }
+}

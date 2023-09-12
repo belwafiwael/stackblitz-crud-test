@@ -1,0 +1,15 @@
+.btn-add.mdc-button.mdc-button--unelevated {
+  font: 500 14px 'Inter', sans-serif;
+  background-color: var(--primary600);
+  border-radius: 10px;
+}
+.btn-add.mat-mdc-unelevated-button[disabled][disabled] {
+  color: var(--color-white);
+  opacity: 0.5;
+}
+.btn-reset.mdc-button.mat-mdc-outlined-button {
+  font: 500 14px 'Inter', sans-serif;
+  background-color: var(--color-white);
+  border-radius: 10px;
+  border-color: var(--primary600);
+}
