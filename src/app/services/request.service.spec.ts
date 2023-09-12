@@ -1,9 +1,10 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { RequestService } from './request.service';
+import { Request } from '../models/request.model';
 
 describe('RequestService', () => {
   let service: RequestService;
@@ -14,6 +15,7 @@ describe('RequestService', () => {
       imports: [HttpClientTestingModule],
       providers: [RequestService],
     });
+
     service = TestBed.inject(RequestService);
     httpMock = TestBed.inject(HttpTestingController);
   });
@@ -26,8 +28,8 @@ describe('RequestService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should fetch requests from the API via GET', () => {
-    const mockRequests = [
+  it('should get requests', () => {
+    const mockRequests: Request[] = [
       {
         id: '0001',
         nameRequest: "Demande d'autorisation de travaux",
@@ -55,36 +57,40 @@ describe('RequestService', () => {
       expect(requests).toEqual(mockRequests);
     });
 
-    const request = httpMock.expectOne('http://localhost:3000/requests');
-    expect(request.request.method).toBe('GET');
-    request.flush(mockRequests);
+    const req = httpMock.expectOne('http://localhost:4200/requests');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockRequests);
   });
 
-  it('should delete a request via DELETE', () => {
-    const requestId = '123'; // Replace with a valid ID
-    service.removeRequest(requestId).subscribe();
+  it('should remove a request by ID', () => {
+    const requestId = '123';
 
-    const request = httpMock.expectOne(
-      `http://localhost:3000/requests/${requestId}`
+    service.removeRequest(requestId).subscribe((response) => {
+      expect(response).toBeTruthy();
+    });
+
+    const req = httpMock.expectOne(
+      `http://localhost:4200/requests/${requestId}`
     );
-    expect(request.request.method).toBe('DELETE');
+    expect(req.request.method).toBe('DELETE');
+    req.flush({});
   });
 
-  it('should add a request via POST', () => {
-    const mockRequest = {
-      id: '00010',
+  it('should add a new request', () => {
+    const mockRequest: Request = {
+      id: '0001',
       nameRequest: "Demande d'autorisation de travaux",
-      description: 'Test Projet de travaux lorem ipsum',
-      user: 'Jhon Doe test',
+      description: '01Projet de travaux lorem ipsum',
+      user: 'Jhon Doe',
       status: 'En cours',
     };
 
-    service.addRequest(mockRequest).subscribe((newRequest) => {
-      expect(newRequest).toEqual(mockRequest);
+    service.addRequest(mockRequest).subscribe((response) => {
+      expect(response).toEqual(mockRequest);
     });
 
-    const request = httpMock.expectOne('http://localhost:3000/requests');
-    expect(request.request.method).toBe('POST');
-    request.flush(mockRequest);
+    const req = httpMock.expectOne('http://localhost:4200/requests');
+    expect(req.request.method).toBe('POST');
+    req.flush(mockRequest);
   });
 });
