@@ -5,7 +5,7 @@ import { Request } from '../models/request.model';
 
 @Injectable({ providedIn: 'root' })
 export class RequestService {
-  private apiUrl = 'http://localhost:4200/requests';
+  private apiUrl = 'http://localhost:3000/requests';
   constructor(private http: HttpClient) {}
 
   getRequest(): Observable<Request[]> {
