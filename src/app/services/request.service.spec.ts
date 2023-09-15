@@ -57,7 +57,7 @@ describe('RequestService', () => {
       expect(requests).toEqual(mockRequests);
     });
 
-    const req = httpMock.expectOne('http://localhost:4200/requests');
+    const req = httpMock.expectOne('http://localhost:3000/requests');
     expect(req.request.method).toBe('GET');
     req.flush(mockRequests);
   });
@@ -70,7 +70,7 @@ describe('RequestService', () => {
     });
 
     const req = httpMock.expectOne(
-      `http://localhost:4200/requests/${requestId}`
+      `http://localhost:3000/requests/${requestId}`
     );
     expect(req.request.method).toBe('DELETE');
     req.flush({});
@@ -78,7 +78,7 @@ describe('RequestService', () => {
 
   it('should add a new request', () => {
     const mockRequest: Request = {
-      id: '0001',
+      id: '0000001',
       nameRequest: "Demande d'autorisation de travaux",
       description: '01Projet de travaux lorem ipsum',
       user: 'Jhon Doe',
@@ -89,7 +89,7 @@ describe('RequestService', () => {
       expect(response).toEqual(mockRequest);
     });
 
-    const req = httpMock.expectOne('http://localhost:4200/requests');
+    const req = httpMock.expectOne('http://localhost:3000/requests');
     expect(req.request.method).toBe('POST');
     req.flush(mockRequest);
   });
