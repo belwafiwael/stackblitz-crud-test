@@ -41,7 +41,10 @@ import { Request } from '../models/request.model';
       <mat-list role="list" class="lists-requests">
         <ng-container *ngFor="let request of requests">
           <mat-list-item role="listitem">
-            <app-request [request]="request" (deleteRequestClicked)="onDeleteRequest($event)"></app-request>
+            <app-request [request]="request"
+              (deleteRequestClicked)="onDeleteRequest($event)"
+              (updateRequestClicked)="onUpdateRequest($event)"
+            ></app-request>
           </mat-list-item>
         </ng-container>
       </mat-list>
