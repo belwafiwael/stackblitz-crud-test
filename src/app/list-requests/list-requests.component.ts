@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ModalComponent } from '../components/modal/modal.component';
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable, Subject, of, switchMap } from 'rxjs';
 import { RequestService } from '../services/request.service';
 import { RequestComponent } from '../components/request/request.component';
 import { Request } from '../models/request.model';
@@ -77,7 +77,7 @@ import { Request } from '../models/request.model';
   ],
 })
 export class ListRequestsComponent implements OnInit {
-  requests$: Observable<Request[]>;
+  requests$!: Observable<Request[]>;
   private requestUpdateSubject = new Subject<Request>();
   private requestDeleteSubject = new Subject<string>();
 
@@ -115,9 +115,6 @@ export class ListRequestsComponent implements OnInit {
     this.requestService.removeRequest(requestId).subscribe(() => {
       this.requestDeleteSubject.next(requestId);
     });
-  }
-  private loadRequests(): void {
-    this.requests$ = this.requestService.getRequest();
   }
   private subscribeToUpdateRequests() {
     this.requestUpdateSubject.subscribe((updatedRequestData) => {
