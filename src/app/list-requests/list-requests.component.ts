@@ -74,7 +74,9 @@ import { Request } from '../models/request.model';
   ],
 })
 export class ListRequestsComponent implements OnInit {
-  requests$!: Observable<Request[]>;
+  requests$: Observable<Request[]>;
+  private requestUpdateSubject = new Subject<Request>();
+  private requestDeleteSubject = new Subject<string>();
 
   constructor(
     public dialog: MatDialog,
@@ -83,32 +85,65 @@ export class ListRequestsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadRequests();
+    this.subscribeToUpdateRequests();
+    this.subscribeToDeleteRequests();
   }
 
   private loadRequests(): void {
     this.requests$ = this.requestService.getRequest();
   }
-  async onDeleteRequest(requestId: string): Promise<void> {
+  onUpdateRequest(request: Request) {
+    const requestCopy = { ...request };
+    const dialogRef = this.dialog.open(ModalComponent, {
+      data: requestCopy,
+    });
+
+    dialogRef.afterClosed().subscribe((updatedRequestData) => {
+      if (updatedRequestData) {
+        this.requestService
+          .updateRequest(request.id, updatedRequestData)
+          .subscribe(() => {
+            this.requestUpdateSubject.next(updatedRequestData);
+          });
+      }
+    });
+  }
+  onDeleteRequest(requestId: string) {
+    this.requestService.removeRequest(requestId).subscribe(() => {
+      this.requestDeleteSubject.next(requestId);
+    });
+  }
+  private loadRequests(): void {
+    this.requests$ = this.requestService.getRequest();
+  }
+  private subscribeToUpdateRequests() {
+    this.requestUpdateSubject.subscribe((updatedRequestData) => {
+      this.refreshRequests(updatedRequestData);
+    });
+  }
+
+  private subscribeToDeleteRequests() {
+    this.requestDeleteSubject.subscribe((deletedRequest) => {
+      this.refreshRequests(deletedRequest);
+    });
+  }
+  private refreshRequests(event?: string | Request) {
     this.requests$ = this.requests$.pipe(
       switchMap((requests) => {
-        const index = requests.findIndex(
-          (request: Request) => request.id === requestId
-        );
-        if (index !== -1) {
-          const updatedRequests = requests.filter(
-            (request: Request) => request.id !== requestId
+        if (typeof event === 'string') {
+          requests = requests.filter((request) => request.id !== event);
+        } else if (event instanceof Request) {
+          const index = requests.findIndex(
+            (request) => request.id === event.id
           );
-          return this.requestService
-            .removeRequest(requestId)
-            .pipe(switchMap(() => of(updatedRequests)));
-        } else {
-          console.log("L'élément spécifié n'a pas été trouvé");
-          return of(requests);
+          if (index !== -1) {
+            requests[index] = event;
+          }
         }
+        return of([...requests]);
       })
     );
   }
-
   openDialog() {
     const dialogRef = this.dialog.open(ModalComponent);
     dialogRef.afterClosed().subscribe((data) => {

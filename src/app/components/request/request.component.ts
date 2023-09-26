@@ -41,7 +41,7 @@ import { MatMenuModule } from '@angular/material/menu';
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item><mat-icon>edit</mat-icon><span>Modifier</span> </button>
+      <button mat-menu-item (click)="onUpdateClick(request)"><mat-icon>edit</mat-icon><span>Modifier</span> </button>
       <button mat-menu-item  (click)="onDeleteClick(request.id)"><mat-icon>delete_forever</mat-icon><span>Supprimer</span></button>
     </mat-menu>
   </mat-card-actions>
@@ -50,11 +50,14 @@ import { MatMenuModule } from '@angular/material/menu';
 export class RequestComponent {
   @Input() request: any;
   @Output() deleteRequestClicked = new EventEmitter<string>();
+  @Output() updateRequestClicked = new EventEmitter<Request>();
 
   onDeleteClick(id: string): void {
     this.deleteRequestClicked.emit(id);
   }
-
+  onUpdateClick(request: Request): void {
+    this.updateRequestClicked.emit(request);
+  }
   getStatusClass(status: string): string {
     switch (status) {
       case 'En cours':

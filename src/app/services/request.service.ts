@@ -20,4 +20,8 @@ export class RequestService {
   addRequest(data: Request): Observable<Request> {
     return this.http.post<Request>(this.apiUrl, data);
   }
+  updateRequest(id: string, updatedData: Request): Observable<Request> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<Request>(url, updatedData);
+  }
 }

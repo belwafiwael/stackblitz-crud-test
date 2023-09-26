@@ -79,6 +79,9 @@ export class ModalComponent {
   ) {}
   ngOnInit(): void {
     this.initializeForm();
+    if (this.data) {
+      this.requestForm.patchValue(this.data);
+    }
   }
 
   initializeForm(): void {
